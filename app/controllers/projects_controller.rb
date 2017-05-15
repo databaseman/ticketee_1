@@ -37,6 +37,17 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def destroy
+    @project = Project.find(params[:id])
+    if @project.destroy
+      flash[:notice] = "Project has been deleted."
+      redirect_to projects_path
+    else
+      flash.now[:alert] = "Project has not been deleted."
+      render "edit"
+    end
+  end
+
   private
   def project_params
     params.require(:project).permit(:name, :description)
